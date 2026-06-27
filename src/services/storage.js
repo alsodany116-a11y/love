@@ -210,15 +210,20 @@ export const storage = {
   applyColorsToDOM: (colors, themePreset = 'classic') => {
     if (!colors) return
     const root = document.documentElement
-    const bg = colors.bg || '#F5EDD6'
-    const gold = colors.gold || '#B8960C'
-    const rose = colors.rose || '#8B3A52'
-    const text = colors.text || '#2C1810'
-    const card = colors.card || '#FDF6E3'
-    const border = colors.border || '#C9A84C'
+    
+    // Check if we are on the admin path to isolate admin dashboard from theme styles
+    const isAdmin = window.location.pathname.startsWith('/admin')
+
+    const bg = isAdmin ? '#F5EDD6' : (colors.bg || '#F5EDD6')
+    const gold = isAdmin ? '#B8960C' : (colors.gold || '#B8960C')
+    const rose = isAdmin ? '#8B3A52' : (colors.rose || '#8B3A52')
+    const text = isAdmin ? '#2C1810' : (colors.text || '#2C1810')
+    const card = isAdmin ? '#FDF6E3' : (colors.card || '#FDF6E3')
+    const border = isAdmin ? '#C9A84C' : (colors.border || '#C9A84C')
+    const activePreset = isAdmin ? 'classic' : themePreset
 
     // Dynamically inject theme preset class onto document body
-    document.body.className = `theme-${themePreset} bg-parchment-bg text-parchment-text antialiased`
+    document.body.className = `theme-${activePreset} bg-parchment-bg text-parchment-text antialiased`
 
     root.style.setProperty('--color-bg', bg)
     root.style.setProperty('--color-gold', gold)
@@ -230,12 +235,13 @@ export const storage = {
 
   applyFontsToDOM: (arabicFont, englishFont) => {
     const root = document.documentElement
-    if (arabicFont) {
-      root.style.setProperty('--font-arabic', `"${arabicFont}"`)
-    }
-    if (englishFont) {
-      root.style.setProperty('--font-english', `"${englishFont}"`)
-    }
+    const isAdmin = window.location.pathname.startsWith('/admin')
+    
+    const activeArabic = isAdmin ? 'Noto Naskh Arabic' : (arabicFont || 'Noto Naskh Arabic')
+    const activeEnglish = isAdmin ? 'Lora' : (englishFont || 'Lora')
+
+    root.style.setProperty('--font-arabic', `"${activeArabic}"`)
+    root.style.setProperty('--font-english', `"${activeEnglish}"`)
   },
 
   // --- 2. FILE UPLOADS TO SUPABASE STORAGE ---
