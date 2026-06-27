@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Set CSS variables matching the design spec, customisable from admin */
+  --color-bg: #F5EDD6;
+  --color-text: #2C1810;
+  --color-gold: #B8960C;
+  --color-rose: #8B3A52;
+  --color-card: #FDF6E3;
+  --color-border: #C9A84C;
+  
+  /* Font Family variables loaded from Google Fonts */
+  --font-arabic: 'Noto Naskh Arabic';
+  --font-english: 'Lora';
+}
+
+/* Base custom resets */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-english), var(--font-arabic), serif;
+  overflow-x: hidden;
+}
+
+/* Paper grain texture */
+.paper-grain::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Vignette overlay */
+.vignette-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  background: radial-gradient(circle, transparent 60%, rgba(44, 24, 16, 0.12) 100%);
+}
+
+/* Hide scrollbars for clean presentation */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Elegant handwriting style for Polaroid captions */
+.font-handwriting {
+  font-family: var(--font-english), var(--font-arabic), serif;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Blinking text writing cursor */
+.blinking-cursor::after {
+  content: "✦";
+  color: var(--color-gold);
+  animation: blink 1s step-end infinite;
+  margin-right: 4px;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
