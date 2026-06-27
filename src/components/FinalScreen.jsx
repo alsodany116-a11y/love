@@ -35,6 +35,20 @@ export default function FinalScreen({ recipientName, signatureName, themePreset 
     }
   }, [showHearts])
 
+  const containerVariants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: delayPerWord,
+      },
+    },
+  }
+
+  const wordVariants = {
+    hidden: { opacity: 0, y: 15 },
+    show: { opacity: 1, y: 0, transition: { duration: animDurationPerWord, ease: 'easeOut' } },
+  }
+
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-6 select-none bg-parchment-bg transition-colors duration-1000">
       

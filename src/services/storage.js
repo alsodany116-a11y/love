@@ -34,6 +34,8 @@ const DEFAULTS = {
     sealStyle: "heart",
     transitionStyle: "cinematic",
     musicStyle: "vinyl",
+    envelopeInsideText: "إلى أغلى ما أملك...",
+    bgHeartsOpacity: 0.15,
     colors: {
       bg: "#F5EDD6",
       gold: "#B8960C",
@@ -135,6 +137,8 @@ export const storage = {
         transitionStyle: data.transition_style || "cinematic",
         musicStyle: data.music_style || "vinyl",
         themePreset: data.theme_preset || "classic",
+        envelopeInsideText: data.envelope_inside_text || "إلى أغلى ما أملك...",
+        bgHeartsOpacity: data.bg_hearts_opacity !== undefined ? data.bg_hearts_opacity : 0.15,
         colors: {
           bg: data.bg_color,
           gold: data.gold_color,
@@ -196,7 +200,9 @@ export const storage = {
           seal_style: settings.sealStyle || 'heart',
           transition_style: settings.transitionStyle || 'cinematic',
           music_style: settings.musicStyle || 'vinyl',
-          theme_preset: settings.themePreset || 'classic'
+          theme_preset: settings.themePreset || 'classic',
+          envelope_inside_text: settings.envelopeInsideText || 'إلى أغلى ما أملك...',
+          bg_hearts_opacity: settings.bgHeartsOpacity !== undefined ? settings.bgHeartsOpacity : 0.15
         })
 
       if (error) throw error

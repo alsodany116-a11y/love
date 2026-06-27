@@ -175,3 +175,5 @@ WHERE NOT EXISTS (SELECT 1 FROM public.romantic_gallery);
 
 -- Migration support for existing databases (adds theme_preset column safely)
 ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS theme_preset text NOT NULL DEFAULT 'classic';
+ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS envelope_inside_text text NOT NULL DEFAULT 'إلى أغلى ما أملك...';
+ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS bg_hearts_opacity double precision NOT NULL DEFAULT 0.15;

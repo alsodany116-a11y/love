@@ -146,7 +146,7 @@ export default function App() {
     <div className="relative min-h-screen w-full overflow-hidden select-none">
       
       {/* Shared Romantic background (grain, vignette, floating petals) */}
-      <RomanticBackground themePreset={settings?.themePreset || 'classic'} />
+      <RomanticBackground themePreset={settings?.themePreset || 'classic'} bgHeartsOpacity={settings?.bgHeartsOpacity} />
 
       {/* Routes Wrapper */}
       <div className="relative z-10 w-full min-h-screen flex flex-col no-scrollbar">

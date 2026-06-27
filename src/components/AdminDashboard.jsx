@@ -700,6 +700,16 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
                 />
               </div>
 
+              <div>
+                <label className="block text-xs font-bold mb-2">الرسالة المكتوبة بداخل الظرف (كارت المفاجأة) ✦</label>
+                <input
+                  type="text"
+                  value={settings.envelopeInsideText}
+                  onChange={(e) => setSettings({ ...settings, envelopeInsideText: e.target.value })}
+                  className="admin-input"
+                />
+              </div>
+
               <div className="pt-6">
                 <button
                   onClick={() => saveAllSettings()}
@@ -1273,7 +1283,29 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
                 </div>
               </div>
 
-              <div className="pt-2">
+              {/* 4. Background Effects */}
+              <h3 className="text-sm font-bold border-b border-parchment-border/20 pb-1.5 mt-8 mb-3 text-parchment-gold">تأثيرات الخلفية الرومانسية</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold mb-2">شفافية القلوب المتطايرة في الخلفية 💖 (0% إلى 100%)</label>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="range"
+                      min="0"
+                      max="0.8"
+                      step="0.05"
+                      value={settings.bgHeartsOpacity !== undefined ? settings.bgHeartsOpacity : 0.15}
+                      onChange={(e) => setSettings({ ...settings, bgHeartsOpacity: parseFloat(e.target.value) })}
+                      className="w-full accent-parchment-rose cursor-pointer"
+                    />
+                    <span className="text-xs font-bold font-mono w-14 text-center bg-parchment-card border border-parchment-border/20 rounded px-1.5 py-0.5">
+                      {Math.round((settings.bgHeartsOpacity !== undefined ? settings.bgHeartsOpacity : 0.15) * 100)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6">
                 <button
                   onClick={() => saveAllSettings()}
                   disabled={isSaving}

@@ -196,7 +196,7 @@ export default function LoginScreen({ mainPassword, onLoginSuccess, siteSettings
             >
               <Heart className="w-8 h-8 text-parchment-rose animate-pulse mb-2" />
               <p className="font-playfair italic text-parchment-text/80 text-sm text-center">
-                إلى أغلى ما أملك...
+                {siteSettings.envelopeInsideText || 'إلى أغلى ما أملك...'}
               </p>
               <div className="w-12 h-[1px] bg-parchment-gold/40 mt-2"></div>
             </div>
@@ -302,7 +302,11 @@ export default function LoginScreen({ mainPassword, onLoginSuccess, siteSettings
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isOpening}
                 placeholder={siteSettings.envelopeHint || "✦ كلمة السر ✦"}
-                className="w-full py-3 px-10 text-center bg-parchment-card/75 text-parchment-text placeholder-parchment-text/40 border border-parchment-border/40 focus:border-parchment-gold focus:outline-none rounded shadow-sm focus:ring-1 focus:ring-parchment-gold text-lg transition-all font-arabic tracking-wide"
+                className={`w-full py-3 px-10 text-center border border-parchment-border/40 focus:border-parchment-gold focus:outline-none rounded shadow-sm focus:ring-1 focus:ring-parchment-gold text-lg transition-all font-arabic tracking-wide ${
+                  siteSettings.themePreset === 'dark' || siteSettings.themePreset === 'night' || siteSettings.themePreset === 'forest'
+                    ? 'bg-black/55 text-white placeholder-white/35'
+                    : 'bg-white text-[#2C1810] placeholder-[#2C1810]/40'
+                }`}
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2 text-parchment-gold">
                 <Lock className="w-4 h-4" />

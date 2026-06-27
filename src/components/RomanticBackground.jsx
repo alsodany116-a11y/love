@@ -1,8 +1,21 @@
 import React, { useEffect, useState } from 'react'
 
-export default function RomanticBackground({ themePreset = 'classic' }) {
+export default function RomanticBackground({ themePreset = 'classic', bgHeartsOpacity = 0.15 }) {
   const [petals, setPetals] = useState([])
   const [stars, setStars] = useState([])
+  const [bgHearts, setBgHearts] = useState([])
+
+  useEffect(() => {
+    // Generate 8 slow rising hearts for the background
+    const generated = Array.from({ length: 8 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      size: Math.random() * 12 + 10, // 10px to 22px
+      duration: Math.random() * 12 + 18, // 18s to 30s
+      delay: Math.random() * -20, // stagger starting times
+    }))
+    setBgHearts(generated)
+  }, [])
 
   useEffect(() => {
     if (themePreset === 'minimal' || themePreset === 'night') {
@@ -75,6 +88,28 @@ export default function RomanticBackground({ themePreset = 'classic' }) {
         </div>
       )}
 
+      {/* Rising Floating Background Hearts (all themes, customizable opacity) */}
+      {bgHeartsOpacity > 0 && (
+        <div className="absolute inset-0 z-18 overflow-hidden pointer-events-none" style={{ opacity: bgHeartsOpacity }}>
+          {bgHearts.map((heart) => (
+            <svg
+              key={heart.id}
+              className="absolute bottom-[-30px] text-parchment-rose fill-current"
+              viewBox="0 0 24 24"
+              style={{
+                left: `${heart.left}%`,
+                width: `${heart.size}px`,
+                height: `${heart.size}px`,
+                animation: `rise-up-${heart.id} ${heart.duration}s linear infinite`,
+                animationDelay: `${heart.delay}s`
+              }}
+            >
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          ))}
+        </div>
+      )}
+
       {/* Floating Rose Petals / Leaves (pure CSS drawing / Emojis) */}
       {themePreset !== 'minimal' && themePreset !== 'night' && (
         <div className="absolute inset-0 z-20">
@@ -121,6 +156,14 @@ export default function RomanticBackground({ themePreset = 'classic' }) {
           0%, 100% { opacity: 0.2; transform: scale(0.8); }
           50% { opacity: 1; transform: scale(1.2); }
         }
+        
+        ${bgHearts.map((heart) => `
+          @keyframes rise-up-${heart.id} {
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-50vh) scale(1.1) rotate(15deg); opacity: 0.8; }
+            100% { transform: translateY(-105vh) scale(0.9) rotate(-15deg); opacity: 0; }
+          }
+        `).join('\n')}
         
         ${petals.map((petal) => `
           @keyframes float-down-${petal.id} {
