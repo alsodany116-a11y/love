@@ -6,7 +6,17 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
   const [showMeetingsOnly, setShowMeetingsOnly] = useState(false)
   const [timeElapsed, setTimeElapsed] = useState({ years: 0, days: 0, hours: 0, minutes: 0, seconds: 0 })
 
-  const activeMeetings = Array.isArray(meetings) ? meetings : []
+  // Robust meetings parsing guard to handle both arrays and JSON-strings from database
+  let activeMeetings = []
+  if (Array.isArray(meetings)) {
+    activeMeetings = meetings
+  } else if (typeof meetings === 'string') {
+    try {
+      activeMeetings = JSON.parse(meetings)
+    } catch (e) {
+      console.error("Failed to parse meetings JSON:", e)
+    }
+  }
 
   const containerVariants = {
     hidden: {},

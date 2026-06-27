@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Volume2, VolumeX, Play, Pause, X } from 'lucide-react'
 
-export default function LetterScreen({ letterText, signatureName, letterFontSize, nextButtonText, voiceUrl, onNext, onBack, onStartMusic }) {
+export default function LetterScreen({ letterText, signatureName, letterFontSize, nextButtonText, voiceUrl, themePreset = 'classic', onNext, onBack, onStartMusic }) {
   const [animationCompleted, setAnimationCompleted] = useState(false)
   const [isVoicePlayerOpen, setIsVoicePlayerOpen] = useState(false)
   const [isVoicePlaying, setIsVoicePlaying] = useState(false)
@@ -125,14 +125,22 @@ export default function LetterScreen({ letterText, signatureName, letterFontSize
       <div className="w-full max-w-[430px] bg-parchment-card/75 border border-parchment-border/40 rounded-lg p-6 md:p-8 shadow-vintage backdrop-blur-[2px] relative mt-8">
         
         {/* Decorative inner border box */}
-        <div className="border-4 border-double border-parchment-border/30 rounded p-6 bg-[#FAF6EE]/40 flex flex-col items-center">
+        <div className={`border-4 border-double border-parchment-border/30 rounded p-6 bg-[#FAF6EE]/40 flex flex-col items-center ${themePreset === 'minimal' ? 'ruled-lines' : ''}`}>
           
-          {/* Top Ornament */}
+          {/* Top Ornament / Moon */}
           <div className="flex flex-col items-center mb-6 w-full">
-            <svg className="w-20 h-5 text-parchment-gold opacity-80" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 12C35 2 65 2 90 12M50 2V22M42 8C45 10 55 10 58 8M45 16C47 15 53 15 55 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <circle cx="50" cy="12" r="3" fill="currentColor" />
-            </svg>
+            {themePreset === 'night' ? (
+              <svg className="w-8 h-8 text-parchment-gold opacity-95 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M12 3a9 9 0 1 0 9 9 9.75 9.75 0 0 0-.67-3.4 6.75 6.75 0 0 1-8.33-8.33A9.75 9.75 0 0 0 12 3Z" fill="currentColor" />
+              </svg>
+            ) : themePreset === 'minimal' ? (
+              <div className="w-24 h-[1px] bg-parchment-gold/40 mb-3" />
+            ) : (
+              <svg className="w-20 h-5 text-parchment-gold opacity-80" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12C35 2 65 2 90 12M50 2V22M42 8C45 10 55 10 58 8M45 16C47 15 53 15 55 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                <circle cx="50" cy="12" r="3" fill="currentColor" />
+              </svg>
+            )}
             <span className="text-[10px] uppercase tracking-widest text-parchment-gold font-bold mt-1">
               إليكِ أنتِ...
             </span>

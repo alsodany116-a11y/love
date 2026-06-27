@@ -50,6 +50,11 @@ export default function App() {
     loadAllContent()
   }, [])
 
+  // Auto-scroll to top of window whenever the screen switches
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [currentScreen])
+
   // --- ANALYTICS VIEWS & DURATION TRACKING ---
   useEffect(() => {
     if (currentScreen === 'login' || currentScreen === 'curtain' || !settings) return
@@ -133,7 +138,7 @@ export default function App() {
     <div className="relative min-h-screen w-full overflow-hidden select-none">
       
       {/* Shared Romantic background (grain, vignette, floating petals) */}
-      <RomanticBackground />
+      <RomanticBackground themePreset={settings?.themePreset || 'classic'} />
 
       {/* Routes Wrapper */}
       <div className="relative z-10 w-full min-h-screen flex flex-col no-scrollbar">
@@ -291,6 +296,7 @@ export default function App() {
                       <FinalScreen
                         recipientName={settings.recipientName}
                         signatureName={settings.signatureName}
+                        themePreset={settings.themePreset}
                         onReset={() => setCurrentScreen('letter')}
                         onBack={() => setCurrentScreen('gallery')}
                       />

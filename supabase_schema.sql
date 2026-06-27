@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS public.romantic_settings (
     seal_style text NOT NULL DEFAULT 'heart', -- 'heart', 'rose', 'ring'
     transition_style text NOT NULL DEFAULT 'cinematic', -- 'cinematic', 'zoom', 'slide'
     music_style text NOT NULL DEFAULT 'vinyl', -- 'vinyl', 'minimal', 'hidden'
+    theme_preset text NOT NULL DEFAULT 'classic',
     created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
@@ -107,7 +108,7 @@ INSERT INTO public.romantic_settings (
     letter_text, signature_name, letter_font_size, music_name, music_url, music_autoplay,
     bg_color, gold_color, rose_color, text_color, next_button_text, gallery_title,
     selected_arabic_font, selected_english_font, playlist, meetings,
-    voice_url, first_encounter_date, envelope_style, seal_style, transition_style, music_style
+    voice_url, first_encounter_date, envelope_style, seal_style, transition_style, music_style, theme_preset
 )
 VALUES (
     'config',
@@ -150,7 +151,8 @@ VALUES (
     'vintage',
     'heart',
     'cinematic',
-    'vinyl'
+    'vinyl',
+    'classic'
 ) ON CONFLICT (id) DO NOTHING;
 
 -- Insert default analytics row if not exists
@@ -170,3 +172,6 @@ WHERE NOT EXISTS (SELECT 1 FROM public.romantic_memories WHERE sort_order = 2);
 INSERT INTO public.romantic_gallery (photo_url, caption, date, sort_order)
 SELECT 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=600', 'وردة حمراء تذكرني بكِ دائماً', 'فبراير 2024', 1
 WHERE NOT EXISTS (SELECT 1 FROM public.romantic_gallery);
+
+-- Migration support for existing databases (adds theme_preset column safely)
+ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS theme_preset text NOT NULL DEFAULT 'classic';

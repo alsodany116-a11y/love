@@ -41,7 +41,8 @@ const DEFAULTS = {
       text: "#2C1810",
       card: "#FDF6E3",
       border: "#C9A84C"
-    }
+    },
+    themePreset: "classic"
   },
   memories: [
     {
@@ -103,7 +104,7 @@ export const storage = {
       if (error || !data) {
         console.warn("Supabase load failed, using local storage/defaults:", error)
         const local = getLocalBackup('settings', DEFAULTS.settings)
-        storage.applyColorsToDOM(local.colors)
+        storage.applyColorsToDOM(local.colors, local.themePreset)
         storage.applyFontsToDOM(local.selectedArabicFont, local.selectedEnglishFont)
         return local
       }
@@ -133,24 +134,25 @@ export const storage = {
         sealStyle: data.seal_style || "heart",
         transitionStyle: data.transition_style || "cinematic",
         musicStyle: data.music_style || "vinyl",
+        themePreset: data.theme_preset || "classic",
         colors: {
           bg: data.bg_color,
           gold: data.gold_color,
           rose: data.rose_color,
           text: data.text_color,
-          card: "#FDF6E3",
-          border: "#C9A84C"
+          card: data.card_color || (data.theme_preset === 'minimal' ? '#ffffff' : (data.theme_preset === 'night' ? '#0e1628' : (data.theme_preset === 'forest' ? '#0c1a10' : (data.theme_preset === 'dark' ? '#1a0d20' : '#FDF6E3')))),
+          border: data.border_color || (data.theme_preset === 'minimal' ? '#e0d0b8' : (data.theme_preset === 'night' ? '#1e3060' : (data.theme_preset === 'forest' ? '#1a3a22' : (data.theme_preset === 'dark' ? '#3a1a30' : '#C9A84C'))))
         }
       }
 
-      storage.applyColorsToDOM(mappedSettings.colors)
+      storage.applyColorsToDOM(mappedSettings.colors, mappedSettings.themePreset)
       storage.applyFontsToDOM(mappedSettings.selectedArabicFont, mappedSettings.selectedEnglishFont)
       setLocalBackup('settings', mappedSettings)
       return mappedSettings
     } catch (e) {
       console.error(e)
       const local = getLocalBackup('settings', DEFAULTS.settings)
-      storage.applyColorsToDOM(local.colors)
+      storage.applyColorsToDOM(local.colors, local.themePreset)
       storage.applyFontsToDOM(local.selectedArabicFont, local.selectedEnglishFont)
       return local
     }
@@ -158,7 +160,7 @@ export const storage = {
 
   saveSettings: async (settings) => {
     setLocalBackup('settings', settings)
-    storage.applyColorsToDOM(settings.colors)
+    storage.applyColorsToDOM(settings.colors, settings.themePreset)
     storage.applyFontsToDOM(settings.selectedArabicFont, settings.selectedEnglishFont)
 
     try {
@@ -193,7 +195,8 @@ export const storage = {
           envelope_style: settings.envelopeStyle || 'vintage',
           seal_style: settings.sealStyle || 'heart',
           transition_style: settings.transitionStyle || 'cinematic',
-          music_style: settings.musicStyle || 'vinyl'
+          music_style: settings.musicStyle || 'vinyl',
+          theme_preset: settings.themePreset || 'classic'
         })
 
       if (error) throw error
@@ -204,13 +207,25 @@ export const storage = {
     }
   },
 
-  applyColorsToDOM: (colors) => {
+  applyColorsToDOM: (colors, themePreset = 'classic') => {
     if (!colors) return
     const root = document.documentElement
-    root.style.setProperty('--color-bg', colors.bg || '#F5EDD6')
-    root.style.setProperty('--color-gold', colors.gold || '#B8960C')
-    root.style.setProperty('--color-rose', colors.rose || '#8B3A52')
-    root.style.setProperty('--color-text', colors.text || '#2C1810')
+    const bg = colors.bg || '#F5EDD6'
+    const gold = colors.gold || '#B8960C'
+    const rose = colors.rose || '#8B3A52'
+    const text = colors.text || '#2C1810'
+    const card = colors.card || '#FDF6E3'
+    const border = colors.border || '#C9A84C'
+
+    // Dynamically inject theme preset class onto document body
+    document.body.className = `theme-${themePreset} bg-parchment-bg text-parchment-text antialiased`
+
+    root.style.setProperty('--color-bg', bg)
+    root.style.setProperty('--color-gold', gold)
+    root.style.setProperty('--color-rose', rose)
+    root.style.setProperty('--color-text', text)
+    root.style.setProperty('--color-card', card)
+    root.style.setProperty('--color-border', border)
   },
 
   applyFontsToDOM: (arabicFont, englishFont) => {

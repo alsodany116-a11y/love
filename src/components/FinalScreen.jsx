@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, RotateCcw } from 'lucide-react'
 
-export default function FinalScreen({ recipientName, signatureName, onReset, onBack }) {
+export default function FinalScreen({ recipientName, signatureName, themePreset = 'classic', onReset, onBack }) {
   const [animationCompleted, setAnimationCompleted] = useState(false)
   const [showHearts, setShowHearts] = useState(false)
   
@@ -21,23 +21,22 @@ export default function FinalScreen({ recipientName, signatureName, onReset, onB
     return () => clearTimeout(timer)
   }, [words.length])
 
-  // Generate only 3 slow rising hearts for a simpler, cleaner presentation
   const [hearts, setHearts] = useState([])
   useEffect(() => {
     if (showHearts) {
       const generated = Array.from({ length: 3 }).map((_, i) => ({
         id: i,
-        left: 25 + Math.random() * 50, // percentage (25% to 75%)
-        size: 12 + Math.random() * 8,   // px (12px to 20px) - smaller
-        delay: Math.random() * 3,        // stagger delays
-        duration: 10 + Math.random() * 5 // seconds (10s to 15s) - extremely slow
+        left: 25 + Math.random() * 50,
+        size: 12 + Math.random() * 8,
+        delay: Math.random() * 3,
+        duration: 10 + Math.random() * 5
       }))
       setHearts(generated)
     }
   }, [showHearts])
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-6 select-none bg-[#F0E6CB] transition-colors duration-1000">
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-6 select-none bg-parchment-bg transition-colors duration-1000">
       
       {/* 1. Top Go Back Option */}
       {onBack && (
@@ -50,22 +49,33 @@ export default function FinalScreen({ recipientName, signatureName, onReset, onB
         </button>
       )}
 
-      {/* Dynamic Deep Vignette edges for deepest cream feel */}
+      {/* Dynamic Deep Vignette edges */}
       <div className="absolute inset-0 pointer-events-none z-10 bg-radial-vignette"></div>
 
       <div className="w-full max-w-[430px] bg-parchment-card/75 border border-parchment-border/40 rounded-lg p-6 md:p-8 shadow-vintage backdrop-blur-[2px] relative mt-6 z-20">
         
         {/* Decorative inner border box */}
-        <div className="border-4 border-double border-parchment-border/30 rounded p-6 bg-[#FAF6EE]/40 flex flex-col items-center">
+        <div className="border-4 border-double border-parchment-border/30 rounded p-6 bg-parchment-inner/40 flex flex-col items-center">
           
-          {/* Top Gold Ornament */}
-          <svg className="w-20 h-5 text-parchment-gold opacity-90 mb-6" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 12C35 2 65 2 90 12M50 2V22M42 8C45 10 55 10 58 8M45 16C47 15 53 15 55 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            <circle cx="50" cy="12" r="3" fill="currentColor" />
-          </svg>
+          {/* Top Gold Ornament / Moon */}
+          {themePreset === 'night' ? (
+            <svg className="w-8 h-8 text-parchment-gold opacity-95 mb-6 animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M12 3a9 9 0 1 0 9 9 9.75 9.75 0 0 0-.67-3.4 6.75 6.75 0 0 1-8.33-8.33A9.75 9.75 0 0 0 12 3Z" fill="currentColor" />
+            </svg>
+          ) : (
+            <svg className="w-20 h-5 text-parchment-gold opacity-90 mb-6" viewBox="0 0 100 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 12C35 2 65 2 90 12M50 2V22M42 8C45 10 55 10 58 8M45 16C47 15 53 15 55 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="50" cy="12" r="3" fill="currentColor" />
+            </svg>
+          )}
 
           {/* Word-by-word message */}
-          <div className="text-xl font-playfair italic leading-relaxed text-parchment-text flex flex-wrap gap-x-2 gap-y-1 justify-center dir-rtl w-full">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="text-xl font-playfair italic leading-relaxed text-parchment-text flex flex-wrap gap-x-2 gap-y-1 justify-center dir-rtl w-full"
+          >
             {words.map((word, index) => (
               <motion.span
                 key={index}

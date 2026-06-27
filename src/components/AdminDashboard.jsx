@@ -152,7 +152,46 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
       }
     }
     setSettings(updated)
-    storage.applyColorsToDOM(updated.colors)
+    storage.applyColorsToDOM(updated.colors, updated.themePreset)
+  }
+
+  // Handle applying theme presets
+  const handleApplyThemePreset = (preset) => {
+    let card = '#FDF6E3'
+    let border = '#C9A84C'
+    
+    if (preset.id === 'dark') {
+      card = '#1a0d20'
+      border = '#3a1a30'
+    } else if (preset.id === 'minimal') {
+      card = '#ffffff'
+      border = '#e0d0b8'
+    } else if (preset.id === 'night') {
+      card = '#0e1628'
+      border = '#1e3060'
+    } else if (preset.id === 'forest') {
+      card = '#0c1a10'
+      border = '#1a3a22'
+    }
+
+    const updated = {
+      ...settings,
+      themePreset: preset.id,
+      selectedArabicFont: preset.arabicFont,
+      selectedEnglishFont: preset.englishFont,
+      colors: {
+        bg: preset.bg,
+        text: preset.text,
+        rose: preset.rose,
+        gold: preset.gold,
+        card: card,
+        border: border
+      }
+    }
+    setSettings(updated)
+    storage.applyColorsToDOM(updated.colors, updated.themePreset)
+    storage.applyFontsToDOM(updated.selectedArabicFont, updated.selectedEnglishFont)
+    saveAllSettings(updated)
   }
 
   // Handle font changes
@@ -1020,6 +1059,104 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
           {activeTab === 'colors' && (
             <div className="space-y-6">
               
+              {/* 0. Theme Presets Select Cards */}
+              <h3 className="text-sm font-bold border-b border-parchment-border/20 pb-1.5 mb-3 text-parchment-gold flex items-center gap-1.5">
+                <span>اختر ثيم رومانسي جاهز 🎨</span>
+              </h3>
+              <p className="text-[11px] text-parchment-text/60 mb-4 leading-relaxed">
+                اضغط على أي مظهر من الثيمات الاحترافية الخمسة المجهزة بالكامل أدناه لتطبيق لوحة الألوان والخطوط والأجواء فوراً على الرسالة بأكملها:
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-8">
+                {[
+                  {
+                    id: 'classic',
+                    name: 'كلاسيك فينيسيا',
+                    desc: 'ورق بردي دافئ وذهبي كلاسيكي مع ختم شمعي إيطالي.',
+                    bg: '#F5EDD6',
+                    text: '#2C1810',
+                    rose: '#8B3A52',
+                    gold: '#B8960C',
+                    arabicFont: 'Noto Naskh Arabic',
+                    englishFont: 'Lora'
+                  },
+                  {
+                    id: 'dark',
+                    name: 'الرومانسية المظلمة',
+                    desc: 'خلفية ليلية فاخرة سوداء مع توهج أحمر وأرجواني ساحر.',
+                    bg: '#0d0d14',
+                    text: '#ffffff',
+                    rose: '#c01840',
+                    gold: '#e8a020',
+                    arabicFont: 'Amiri',
+                    englishFont: 'Cairo'
+                  },
+                  {
+                    id: 'minimal',
+                    name: 'البساطة الفاخرة',
+                    desc: 'زوايا حادة عصرية، ورق كتابة مبطن، بدون تدرجات أو وهج.',
+                    bg: '#f5f0eb',
+                    text: '#1a1410',
+                    rose: '#1a1410',
+                    gold: '#c8a876',
+                    arabicFont: 'Amiri',
+                    englishFont: 'Cairo'
+                  },
+                  {
+                    id: 'night',
+                    name: 'سماء الليل المرصعة',
+                    desc: 'سماء داكنة مرصعة بالنجوم اللامعة وهلال يزين الصفحة.',
+                    bg: '#0a0f1e',
+                    text: '#e8eeff',
+                    rose: '#1a3a7a',
+                    gold: '#7eb8f7',
+                    arabicFont: 'Amiri',
+                    englishFont: 'Cairo'
+                  },
+                  {
+                    id: 'forest',
+                    name: 'الغابة المظلمة',
+                    desc: 'أجواء الطبيعة والغموض الخضراء مع وهج ناعم وأوراق متطايرة.',
+                    bg: '#080f0a',
+                    text: '#e8f5ee',
+                    rose: '#1a6a3a',
+                    gold: '#5aba7a',
+                    arabicFont: 'Amiri',
+                    englishFont: 'Cairo'
+                  }
+                ].map((preset) => {
+                  const isCurrent = (settings.themePreset || 'classic') === preset.id
+                  return (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      onClick={() => handleApplyThemePreset(preset)}
+                      className={`text-right p-3.5 rounded-lg border-2 transition-all flex flex-col justify-between cursor-pointer text-xs ${
+                        isCurrent
+                          ? 'border-parchment-rose bg-parchment-rose/5 shadow-sm scale-102'
+                          : 'border-parchment-border/30 hover:border-parchment-gold hover:bg-parchment-card/30'
+                      }`}
+                    >
+                      <div className="w-full">
+                        <div className="flex items-center justify-between mb-1.5">
+                          <span className="font-bold text-xs text-parchment-text">{preset.name}</span>
+                          {isCurrent && <span className="text-[10px] bg-parchment-rose text-white px-1.5 py-0.5 rounded font-bold">نشط</span>}
+                        </div>
+                        <p className="text-[10px] text-parchment-text/60 leading-normal mb-3 min-h-[36px]">{preset.desc}</p>
+                      </div>
+
+                      {/* Color dots preview */}
+                      <div className="flex items-center gap-1.5 mt-2 justify-start">
+                        <span className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: preset.bg }} title="الخلفية" />
+                        <span className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: preset.rose }} title="الرئيسي" />
+                        <span className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: preset.gold }} title="الفرعي" />
+                        <span className="w-3 h-3 rounded-full border border-black/10" style={{ backgroundColor: preset.text }} title="النص" />
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+
               {/* 1. Theme layouts selectors */}
               <h3 className="text-sm font-bold border-b border-parchment-border/20 pb-1.5 mb-3 text-parchment-gold">تخصيص تصاميم المظهر (الثيم)</h3>
               <div className="grid grid-cols-2 gap-4">
