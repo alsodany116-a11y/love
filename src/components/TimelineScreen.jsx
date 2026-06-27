@@ -130,8 +130,8 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
                 className="bg-parchment-card/90 border border-parchment-border/40 rounded-lg p-5 shadow-vintage relative overflow-hidden text-right"
               >
                 {/* Vintage Postage Stamp Ornament on top right corner */}
-                <div className="absolute top-4 left-4 w-12 h-14 border border-dashed border-parchment-border/50 bg-[#FAF6EE] p-1 flex flex-col items-center justify-center rounded-sm shadow-xs select-none">
-                  <div className="w-full h-full border border-parchment-gold/20 flex flex-col items-center justify-center bg-[#FAF6EE]/50">
+                <div className="absolute top-4 left-4 w-12 h-14 border border-dashed border-parchment-border/50 bg-parchment-card p-1 flex flex-col items-center justify-center rounded-sm shadow-xs select-none">
+                  <div className="w-full h-full border border-parchment-gold/20 flex flex-col items-center justify-center bg-parchment-bg/30">
                     <Heart className="w-4 h-4 text-parchment-rose animate-pulse" />
                     <span className="text-[6px] font-bold text-parchment-gold/80 mt-1 font-mono">LOVE</span>
                   </div>
@@ -290,7 +290,7 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
                         }}
                       >
                         {/* Elegant dark overlay to ensure high text contrast and readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1E0D07]/95 via-[#1E0D07]/60 to-transparent z-0"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-0"></div>
                         
                         {/* Card Content Overlayed */}
                         <div className="relative z-10 p-5 space-y-2">
@@ -304,7 +304,7 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
                             {memory.title}
                           </h3>
 
-                          <p className="text-xs font-lora text-parchment-bg/90 leading-relaxed whitespace-pre-line break-words max-h-32 overflow-y-auto no-scrollbar pr-1">
+                          <p className="text-xs font-lora text-white/90 leading-relaxed whitespace-pre-line break-words max-h-32 overflow-y-auto no-scrollbar pr-1">
                             {memory.description}
                           </p>
                         </div>

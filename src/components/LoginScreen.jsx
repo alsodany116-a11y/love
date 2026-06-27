@@ -302,7 +302,7 @@ export default function LoginScreen({ mainPassword, onLoginSuccess, siteSettings
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isOpening}
                 placeholder={siteSettings.envelopeHint || "✦ كلمة السر ✦"}
-                className="w-full py-3 px-10 text-center bg-[#FBF7EE] text-parchment-text placeholder-parchment-text/40 border border-parchment-border/40 focus:border-parchment-gold focus:outline-none rounded shadow-sm focus:ring-1 focus:ring-parchment-gold text-lg transition-all font-arabic tracking-wide"
+                className="w-full py-3 px-10 text-center bg-parchment-card/75 text-parchment-text placeholder-parchment-text/40 border border-parchment-border/40 focus:border-parchment-gold focus:outline-none rounded shadow-sm focus:ring-1 focus:ring-parchment-gold text-lg transition-all font-arabic tracking-wide"
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2 text-parchment-gold">
                 <Lock className="w-4 h-4" />

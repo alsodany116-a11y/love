@@ -77,7 +77,7 @@ export default function App() {
     return () => {
       const duration = Math.round((Date.now() - startTime) / 1000)
       if (duration > 0) {
-        storage.incrementDuration(currentScreen, duration)
+        storage.updatePageDuration(currentScreen, duration)
       }
     }
   }, [currentScreen, settings])

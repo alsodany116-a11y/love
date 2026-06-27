@@ -112,8 +112,8 @@ export default function GalleryScreen({ gallery, galleryTitle, nextButtonText, o
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: (index % 2) * 0.1 }}
                 onClick={() => openLightbox(index)}
-                className={`relative border border-parchment-border/40 shadow-vintage overflow-hidden rounded-lg transform ${rotationClass} hover:rotate-0 hover:scale-[1.03] hover:z-30 transition-all duration-300 w-full ${
-                  hasPhoto ? 'cursor-pointer min-h-[220px] flex flex-col justify-end' : 'bg-white p-4 flex flex-col justify-center min-h-[140px] cursor-default'
+                 className={`relative border border-parchment-border/40 shadow-vintage overflow-hidden rounded-lg transform ${rotationClass} hover:rotate-0 hover:scale-[1.03] hover:z-30 transition-all duration-300 w-full ${
+                  hasPhoto ? 'cursor-pointer min-h-[220px] flex flex-col justify-end' : 'bg-parchment-card/90 p-4 flex flex-col justify-center min-h-[140px] cursor-default'
                 }`}
                 style={hasPhoto ? {
                   backgroundImage: `url(${photo.photoUrl})`,
@@ -124,7 +124,7 @@ export default function GalleryScreen({ gallery, galleryTitle, nextButtonText, o
                 {hasPhoto ? (
                   <>
                     {/* Dark gradient overlay for text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1b0d07]/95 via-[#1b0d07]/45 to-transparent z-0"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent z-0"></div>
                     
                     {/* Caption Overlay */}
                     <div className="relative z-10 p-3.5 text-center space-y-1">
@@ -141,7 +141,7 @@ export default function GalleryScreen({ gallery, galleryTitle, nextButtonText, o
                 ) : (
                   /* Text-Only Slot */
                   <div className="text-center">
-                    <p className="font-handwriting text-[#3D251E] text-xs leading-relaxed break-words whitespace-pre-line mb-2">
+                    <p className="font-handwriting text-parchment-text text-xs leading-relaxed break-words whitespace-pre-line mb-2">
                       {photo.caption}
                     </p>
                     {hasDate && (
