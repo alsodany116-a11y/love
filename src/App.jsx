@@ -50,6 +50,14 @@ export default function App() {
     loadAllContent()
   }, [])
 
+  // Dynamic CSS variables and body theme injector hook
+  useEffect(() => {
+    if (settings) {
+      storage.applyColorsToDOM(settings.colors, settings.themePreset)
+      storage.applyFontsToDOM(settings.selectedArabicFont, settings.selectedEnglishFont)
+    }
+  }, [settings])
+
   // Auto-scroll to top of window whenever the screen switches
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
@@ -67,9 +75,9 @@ export default function App() {
 
     // 3. Commit duration when user navigates away
     return () => {
-      const elapsedSeconds = (Date.now() - startTime) / 1000
-      if (elapsedSeconds > 0.5) {
-        storage.updatePageDuration(currentScreen, elapsedSeconds)
+      const duration = Math.round((Date.now() - startTime) / 1000)
+      if (duration > 0) {
+        storage.incrementDuration(currentScreen, duration)
       }
     }
   }, [currentScreen, settings])
@@ -95,10 +103,10 @@ export default function App() {
 
   if (isLoading || !settings) {
     return (
-      <div className="min-h-screen w-full flex items-center justify-center bg-[#F5EDD6] text-[#2C1810] font-arabic select-none">
+      <div className="min-h-screen w-full flex items-center justify-center bg-parchment-bg text-parchment-text font-arabic select-none">
         <div className="text-center">
-          <div className="w-10 h-10 border-4 border-[#B8960C] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-sm font-semibold tracking-wider">جاري تحميل رسالة الحب الكلاسيكية...</p>
+          <div className="w-10 h-10 border-4 border-parchment-gold border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-sm font-semibold tracking-wider">جاري تحميل رسالة الحب...</p>
         </div>
       </div>
     )

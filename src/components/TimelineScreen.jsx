@@ -202,31 +202,31 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
               <div className="grid grid-cols-5 gap-1.5 w-full select-all font-mono font-bold text-parchment-text">
                 
                 {/* Years */}
-                <div className="flex flex-col items-center bg-[#FAF6EE] border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
+                <div className="flex flex-col items-center bg-parchment-card/60 border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
                   <span className="text-sm md:text-base text-parchment-rose">{timeElapsed.years}</span>
                   <span className="text-[8px] font-arabic text-parchment-text/50 mt-0.5">سنة</span>
                 </div>
 
                 {/* Days */}
-                <div className="flex flex-col items-center bg-[#FAF6EE] border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
+                <div className="flex flex-col items-center bg-parchment-card/60 border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
                   <span className="text-sm md:text-base text-parchment-rose">{timeElapsed.days}</span>
                   <span className="text-[8px] font-arabic text-parchment-text/50 mt-0.5">يوم</span>
                 </div>
 
                 {/* Hours */}
-                <div className="flex flex-col items-center bg-[#FAF6EE] border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
+                <div className="flex flex-col items-center bg-parchment-card/60 border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
                   <span className="text-sm md:text-base text-parchment-rose">{timeElapsed.hours}</span>
                   <span className="text-[8px] font-arabic text-parchment-text/50 mt-0.5">ساعة</span>
                 </div>
 
                 {/* Minutes */}
-                <div className="flex flex-col items-center bg-[#FAF6EE] border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
+                <div className="flex flex-col items-center bg-parchment-card/60 border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
                   <span className="text-sm md:text-base text-parchment-rose">{timeElapsed.minutes}</span>
                   <span className="text-[8px] font-arabic text-parchment-text/50 mt-0.5">دقيقة</span>
                 </div>
 
                 {/* Seconds */}
-                <div className="flex flex-col items-center bg-[#FAF6EE] border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
+                <div className="flex flex-col items-center bg-parchment-card/60 border border-parchment-border/20 rounded p-1.5 min-w-[50px]">
                   <span className="text-sm md:text-base text-parchment-rose">{timeElapsed.seconds}</span>
                   <span className="text-[8px] font-arabic text-parchment-text/50 mt-0.5">ثانية</span>
                 </div>
