@@ -91,7 +91,7 @@ export default function FinalScreen({ recipientName, signatureName, themePreset 
                 {word}
               </motion.span>
             ))}
-          </div>
+          </motion.div>
 
         </div>
 
