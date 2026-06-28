@@ -60,7 +60,10 @@ export default function App() {
 
   // Auto-scroll to top of window whenever the screen switches
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    const timer = setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 100)
+    return () => clearTimeout(timer)
   }, [currentScreen])
 
   // --- ANALYTICS VIEWS & DURATION TRACKING ---

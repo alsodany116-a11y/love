@@ -280,31 +280,30 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
                     </div>
 
                     {memory.photoUrl && memory.photoUrl.trim() !== '' ? (
-                      /* 1. Full Image Background Card */
-                      <div
-                        className="relative border border-parchment-border/40 rounded-lg shadow-vintage overflow-hidden w-full min-h-[300px] flex flex-col justify-end transform transition-transform duration-300 hover:scale-[1.02] text-right"
-                        style={{
-                          backgroundImage: `url(${memory.photoUrl})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center'
-                        }}
-                      >
-                        {/* Elegant dark overlay to ensure high text contrast and readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-0"></div>
-                        
-                        {/* Card Content Overlayed */}
-                        <div className="relative z-10 p-5 space-y-2">
+                      /* 1. Vertical Card with Full Photo on Top & Text Below */
+                      <div className="bg-parchment-card/90 border border-parchment-border/40 rounded-lg shadow-vintage overflow-hidden w-full flex flex-col transform transition-transform duration-300 hover:scale-[1.02] text-right">
+                        {/* Image top container */}
+                        <div className="w-full h-[220px] sm:h-[260px] overflow-hidden border-b border-parchment-border/20 bg-black/5">
+                          <img
+                            src={memory.photoUrl}
+                            alt={memory.title}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                        {/* Content bottom container */}
+                        <div className="p-5 space-y-2.5">
                           {hasDate && (
-                            <span className="inline-block text-[10px] font-bold text-white bg-parchment-rose/90 border border-parchment-rose/30 rounded px-2.5 py-0.5">
+                            <span className="inline-block text-[10px] font-bold text-parchment-rose bg-parchment-bg/60 border border-parchment-border/30 rounded px-2.5 py-0.5">
                               📬 {memory.date}
                             </span>
                           )}
 
-                          <h3 className="text-xl font-playfair italic font-semibold text-parchment-gold break-words">
+                          <h3 className="text-xl font-playfair italic font-semibold text-parchment-text break-words">
                             {memory.title}
                           </h3>
 
-                          <p className="text-xs font-lora text-white/90 leading-relaxed whitespace-pre-line break-words max-h-32 overflow-y-auto no-scrollbar pr-1">
+                          <p className="text-sm font-lora text-parchment-text/80 leading-relaxed whitespace-pre-line break-words">
                             {memory.description}
                           </p>
                         </div>

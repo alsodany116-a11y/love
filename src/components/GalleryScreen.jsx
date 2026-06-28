@@ -104,55 +104,56 @@ export default function GalleryScreen({ gallery, galleryTitle, nextButtonText, o
           const hasPhoto = photo.photoUrl && photo.photoUrl.trim() !== ''
           const hasDate = photo.date && photo.date.trim() !== ''
           
-            return (
-              <motion.div
-                key={photo.id || index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: (index % 2) * 0.1 }}
-                onClick={() => openLightbox(index)}
-                 className={`relative border border-parchment-border/40 shadow-vintage overflow-hidden rounded-lg transform ${rotationClass} hover:rotate-0 hover:scale-[1.03] hover:z-30 transition-all duration-300 w-full ${
-                  hasPhoto ? 'cursor-pointer min-h-[220px] flex flex-col justify-end' : 'bg-parchment-card/90 p-4 flex flex-col justify-center min-h-[140px] cursor-default'
-                }`}
-                style={hasPhoto ? {
-                  backgroundImage: `url(${photo.photoUrl})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                } : {}}
-              >
-                {hasPhoto ? (
-                  <>
-                    {/* Dark gradient overlay for text readability */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent z-0"></div>
-                    
-                    {/* Caption Overlay */}
-                    <div className="relative z-10 p-3.5 text-center space-y-1">
-                      <p className="font-handwriting text-white text-xs leading-relaxed break-words whitespace-pre-line">
-                        {photo.caption}
-                      </p>
-                      {hasDate && (
-                        <span className="inline-block text-[8px] font-bold text-parchment-gold bg-black/40 rounded px-1.5 py-0.5 mt-0.5">
-                          {photo.date}
-                        </span>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  /* Text-Only Slot */
-                  <div className="text-center">
-                    <p className="font-handwriting text-parchment-text text-xs leading-relaxed break-words whitespace-pre-line mb-2">
+          return (
+            <motion.div
+              key={photo.id || index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: (index % 2) * 0.1 }}
+              onClick={() => openLightbox(index)}
+              className={`relative border border-parchment-border/40 shadow-vintage overflow-hidden rounded-lg transform ${rotationClass} hover:rotate-0 hover:scale-[1.03] hover:z-30 transition-all duration-300 w-full flex flex-col bg-parchment-card/95 ${
+                hasPhoto ? 'cursor-pointer min-h-[220px]' : 'p-4 justify-center min-h-[140px] cursor-default'
+              }`}
+            >
+              {hasPhoto ? (
+                <>
+                  {/* Image top container */}
+                  <div className="w-full aspect-square overflow-hidden bg-black/5 border-b border-parchment-border/20">
+                    <img
+                      src={photo.photoUrl}
+                      alt={photo.caption}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  {/* Caption bottom area */}
+                  <div className="p-3 text-center space-y-1 flex-1 flex flex-col justify-center">
+                    <p className="font-handwriting text-parchment-text text-[11px] leading-relaxed break-words whitespace-pre-line">
                       {photo.caption}
                     </p>
                     {hasDate && (
-                      <span className="text-[9px] font-bold text-parchment-rose block">
-                        📬 {photo.date}
+                      <span className="text-[8px] font-bold text-parchment-rose block mt-1">
+                        {photo.date}
                       </span>
                     )}
                   </div>
-                )}
-              </motion.div>
-            )
+                </>
+              ) : (
+                /* Text-Only Slot */
+                <div className="text-center">
+                  <p className="font-handwriting text-parchment-text text-xs leading-relaxed break-words whitespace-pre-line mb-2">
+                    {photo.caption}
+                  </p>
+                  {hasDate && (
+                    <span className="text-[9px] font-bold text-parchment-rose block">
+                      📬 {photo.date}
+                    </span>
+                  )}
+                </div>
+              )}
+            </motion.div>
+          )
         })}
       </div>
 
