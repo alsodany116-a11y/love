@@ -93,6 +93,8 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
   // Scroll to top when toggling views
   useEffect(() => {
     window.scrollTo(0, 0)
+    if (document.body) document.body.scrollTo(0, 0)
+    if (document.documentElement) document.documentElement.scrollTo(0, 0)
   }, [showMeetingsOnly])
 
   return (

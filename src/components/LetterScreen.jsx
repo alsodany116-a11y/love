@@ -8,6 +8,8 @@ export default function LetterScreen({ letterText, signatureName, letterFontSize
   // Scroll to top on component mount
   useEffect(() => {
     window.scrollTo(0, 0)
+    if (document.body) document.body.scrollTo(0, 0)
+    if (document.documentElement) document.documentElement.scrollTo(0, 0)
   }, [])
   const [isVoicePlayerOpen, setIsVoicePlayerOpen] = useState(false)
   const [isVoicePlaying, setIsVoicePlaying] = useState(false)
