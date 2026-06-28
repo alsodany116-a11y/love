@@ -90,6 +90,11 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
     return () => clearInterval(interval)
   }, [firstEncounterDate])
 
+  // Scroll to top when toggling views
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [showMeetingsOnly])
+
   return (
     <div className="relative min-h-screen w-full flex flex-col items-center py-24 px-4 select-none font-arabic">
       
@@ -128,17 +133,11 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
           </div>
 
           {/* Cards Stack */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="space-y-8 w-full px-2"
-          >
+          <div className="space-y-8 w-full px-2 animate-[fadeIn_0.5s_ease-out]">
             {activeMeetings.map((meeting, index) => (
-              <motion.div
+              <div
                 key={index}
-                variants={itemVariants}
-                className="bg-parchment-card/90 border border-parchment-border/40 rounded-lg p-5 shadow-vintage relative overflow-hidden text-right"
+                className="bg-parchment-card/90 border border-parchment-border/40 rounded-lg p-5 shadow-vintage relative overflow-hidden text-right transition-all duration-300 hover:shadow-lg hover:scale-[1.01]"
               >
                 {/* Vintage Postage Stamp Ornament on top right corner */}
                 <div className="absolute top-4 left-4 w-12 h-14 border border-dashed border-parchment-border/50 bg-parchment-card p-1 flex flex-col items-center justify-center rounded-sm shadow-xs select-none">
@@ -164,13 +163,13 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
                 <p className="text-sm font-lora text-parchment-text/80 leading-relaxed border-t border-parchment-border/20 pt-3 whitespace-pre-line break-words pr-1">
                   {meeting.note}
                 </p>
-              </motion.div>
+              </div>
             ))}
 
             {activeMeetings.length === 0 && (
               <p className="text-center text-xs text-parchment-text/45 py-12">لا توجد لقاءات مسجلة بعد.</p>
             )}
-          </motion.div>
+          </div>
 
           <button
             onClick={() => setShowMeetingsOnly(false)}

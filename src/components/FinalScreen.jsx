@@ -4,6 +4,11 @@ import { ArrowRight, RotateCcw } from 'lucide-react'
 
 export default function FinalScreen({ recipientName, signatureName, themePreset = 'classic', onReset, onBack }) {
   const [animationCompleted, setAnimationCompleted] = useState(false)
+
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const [showHearts, setShowHearts] = useState(false)
   
   const finalMessageText = `شكراً لأنكِ في حياتي، وشكراً لكل لحظة جميلة عشناها وسنعيشها معاً.. أنتِ اختياري الوحيد ونبض قلبي الصادق. عهدٌ عليّ أن أصون حبّنا، وأن أظل مخلصاً لعينيكِ الجميلتين.`

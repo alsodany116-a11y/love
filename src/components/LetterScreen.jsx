@@ -4,6 +4,11 @@ import { ArrowRight, Volume2, VolumeX, Play, Pause, X } from 'lucide-react'
 
 export default function LetterScreen({ letterText, signatureName, letterFontSize, nextButtonText, voiceUrl, themePreset = 'classic', onNext, onBack, onStartMusic }) {
   const [animationCompleted, setAnimationCompleted] = useState(false)
+
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const [isVoicePlayerOpen, setIsVoicePlayerOpen] = useState(false)
   const [isVoicePlaying, setIsVoicePlaying] = useState(false)
   const voiceAudioRef = useRef(null)

@@ -58,12 +58,27 @@ export default function App() {
     }
   }, [settings])
 
-  // Auto-scroll to top of window whenever the screen switches
+  // Auto-scroll to top of window whenever the screen switches (multi-stage scroll to bypass animation delay layout shifts)
   useEffect(() => {
-    const timer = setTimeout(() => {
+    window.scrollTo(0, 0)
+    
+    const timer1 = setTimeout(() => {
       window.scrollTo(0, 0)
     }, 100)
-    return () => clearTimeout(timer)
+    
+    const timer2 = setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 500)
+
+    const timer3 = setTimeout(() => {
+      window.scrollTo(0, 0)
+    }, 900)
+
+    return () => {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+      clearTimeout(timer3)
+    }
   }, [currentScreen])
 
   // --- ANALYTICS VIEWS & DURATION TRACKING ---

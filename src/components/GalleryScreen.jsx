@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react'
 
 export default function GalleryScreen({ gallery, galleryTitle, nextButtonText, onNext, onBack }) {
   const [lightboxIndex, setLightboxIndex] = useState(null)
+
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   // Open lightbox
   const openLightbox = (index) => {
