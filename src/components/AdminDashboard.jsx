@@ -115,6 +115,8 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
         setPhotoForm(prev => ({ ...prev, photoUrl: res.url }))
       } else if (fieldType === 'voice') {
         setSettings(prev => ({ ...prev, voiceUrl: res.url }))
+      } else if (fieldType === 'playlist') {
+        setPlaylistForm(prev => ({ ...prev, url: res.url }))
       }
       alert('تم تحميل الملف وتوليد الرابط بنجاح! 📸🎙️')
     } else {
@@ -1596,9 +1598,32 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold mb-1">رابط ملف الصوت المباشر (Direct MP3 URL) ✦</label>
+                  <label className="block text-xs font-bold mb-1">تحميل ملف الصوت مباشرة (Upload MP3) ✦</label>
+                  <div className="flex items-center gap-3 mb-2.5">
+                    <input
+                      type="file"
+                      accept="audio/*"
+                      id="playlist-audio-file"
+                      disabled={isUploading}
+                      onChange={(e) => handleFileUpload(e, 'playlist')}
+                      className="hidden"
+                    />
+                    <label
+                      htmlFor="playlist-audio-file"
+                      className="px-4 py-2 border border-parchment-border/40 text-parchment-gold hover:text-white hover:bg-parchment-gold rounded cursor-pointer text-xs font-bold transition-all flex items-center gap-1.5"
+                    >
+                      {isUploading && uploadField === 'playlist' ? 'جاري التحميل... 🎙️' : 'اختر ملف MP3'}
+                    </label>
+                    {playlistForm.url && (
+                      <span className="text-[10px] text-green-600 font-bold">✓ تم تحميل الملف بنجاح</span>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold mb-1">أو كتابة رابط ملف الصوت المباشر (Direct MP3 URL) ✦</label>
                   <input
-                    type="url"
+                    type="text"
                     required
                     placeholder="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
                     value={playlistForm.url}
