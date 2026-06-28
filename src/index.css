@@ -97,9 +97,9 @@ html, body, #root {
   border-width: 1px !important;
 }
 
-/* Ruled paper background inside letter screen for minimal luxury theme */
+/* Ruled paper background inside letter screen for minimal luxury theme (adapted to Baby Blue Palette) */
 .theme-minimal .ruled-lines {
-  background-image: repeating-linear-gradient(transparent, transparent 31px, rgba(200, 168, 118, 0.12) 31px, rgba(200, 168, 118, 0.12) 32px) !important;
+  background-image: repeating-linear-gradient(transparent, transparent 31px, rgba(142, 201, 232, 0.18) 31px, rgba(142, 201, 232, 0.18) 32px) !important;
   line-height: 32px !important;
 }
 
@@ -148,4 +148,12 @@ html, body, #root {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Snappy and smooth View Transitions rules */
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: 0.25s;
+  animation-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
 }

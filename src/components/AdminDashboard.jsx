@@ -165,7 +165,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
       border = '#3a1a30'
     } else if (preset.id === 'minimal') {
       card = '#ffffff'
-      border = '#e0d0b8'
+      border = '#c5e3f5'
     } else if (preset.id === 'night') {
       card = '#0e1628'
       border = '#1e3060'
@@ -1103,13 +1103,13 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
                   },
                   {
                     id: 'minimal',
-                    name: 'البساطة الفاخرة',
-                    desc: 'زوايا حادة عصرية، ورق كتابة مبطن، بدون تدرجات أو وهج.',
-                    bg: '#f5f0eb',
-                    text: '#1a1410',
-                    rose: '#1a1410',
-                    gold: '#c8a876',
-                    arabicFont: 'Amiri',
+                    name: 'البساطة الفاخرة (Baby Blue)',
+                    desc: 'درجات الأزرق السماوي الهادئ وزوايا حادة ناعمة لجمال هادئ ومريح.',
+                    bg: '#eef6fb',
+                    text: '#1e5f84',
+                    rose: '#4a9fc4',
+                    gold: '#8ec9e8',
+                    arabicFont: 'Cairo',
                     englishFont: 'Cairo'
                   },
                   {

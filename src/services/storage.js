@@ -145,7 +145,7 @@ export const storage = {
           rose: data.rose_color,
           text: data.text_color,
           card: data.card_color || (data.theme_preset === 'minimal' ? '#ffffff' : (data.theme_preset === 'night' ? '#0e1628' : (data.theme_preset === 'forest' ? '#0c1a10' : (data.theme_preset === 'dark' ? '#1a0d20' : '#FDF6E3')))),
-          border: data.border_color || (data.theme_preset === 'minimal' ? '#e0d0b8' : (data.theme_preset === 'night' ? '#1e3060' : (data.theme_preset === 'forest' ? '#1a3a22' : (data.theme_preset === 'dark' ? '#3a1a30' : '#C9A84C'))))
+          border: data.border_color || (data.theme_preset === 'minimal' ? '#c5e3f5' : (data.theme_preset === 'night' ? '#1e3060' : (data.theme_preset === 'forest' ? '#1a3a22' : (data.theme_preset === 'dark' ? '#3a1a30' : '#C9A84C'))))
         }
       }
 
