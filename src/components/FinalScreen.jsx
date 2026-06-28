@@ -50,7 +50,7 @@ export default function FinalScreen({ recipientName, signatureName, themePreset 
   }
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-6 select-none bg-parchment-bg transition-colors duration-1000">
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-start py-24 px-4 select-none bg-parchment-bg transition-colors duration-1000">
       
       {/* 1. Top Go Back Option */}
       {onBack && (
@@ -66,10 +66,10 @@ export default function FinalScreen({ recipientName, signatureName, themePreset 
       {/* Dynamic Deep Vignette edges */}
       <div className="absolute inset-0 pointer-events-none z-10 bg-radial-vignette"></div>
 
-      <div className="w-full max-w-[430px] bg-parchment-card/75 border border-parchment-border/40 rounded-lg p-6 md:p-8 shadow-vintage backdrop-blur-[2px] relative mt-6 z-20">
+      <div className="w-full max-w-[430px] bg-parchment-card/75 border border-parchment-border/40 rounded-lg p-4 md:p-8 shadow-vintage backdrop-blur-[2px] relative mt-4 mb-28 z-20">
         
         {/* Decorative inner border box */}
-        <div className="border-4 border-double border-parchment-border/30 rounded p-6 bg-parchment-inner/40 flex flex-col items-center">
+        <div className="border-4 border-double border-parchment-border/30 rounded p-4 md:p-6 bg-parchment-inner/40 flex flex-col items-center">
           
           {/* Top Gold Ornament / Moon */}
           {themePreset === 'night' ? (

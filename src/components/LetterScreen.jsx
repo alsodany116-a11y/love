@@ -85,7 +85,7 @@ export default function LetterScreen({ letterText, signatureName, letterFontSize
   const waveformBars = Array.from({ length: 16 })
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col items-center justify-center py-20 px-6 select-none font-arabic">
+    <div className="relative min-h-screen w-full flex flex-col items-center justify-start py-24 px-4 select-none font-arabic">
       
       {/* Hidden Voice Audio - Kept at top level so it can play in the background */}
       {typeof voiceUrl === 'string' && voiceUrl.trim() !== '' && (
@@ -122,10 +122,10 @@ export default function LetterScreen({ letterText, signatureName, letterFontSize
       )}
 
       {/* Main outer card */}
-      <div className="w-full max-w-[430px] bg-parchment-card/75 border border-parchment-border/40 rounded-lg p-6 md:p-8 shadow-vintage backdrop-blur-[2px] relative mt-8">
+      <div className="w-full max-w-[430px] bg-parchment-card/75 border border-parchment-border/40 rounded-lg p-4 md:p-8 shadow-vintage backdrop-blur-[2px] relative mt-4 mb-28">
         
         {/* Decorative inner border box */}
-        <div className={`border-4 border-double border-parchment-border/30 rounded p-6 bg-[#FAF6EE]/40 flex flex-col items-center ${themePreset === 'minimal' ? 'ruled-lines' : ''}`}>
+        <div className={`border-4 border-double border-parchment-border/30 rounded p-4 md:p-6 bg-[#FAF6EE]/40 flex flex-col items-center ${themePreset === 'minimal' ? 'ruled-lines' : ''}`}>
           
           {/* Top Ornament / Moon */}
           <div className="flex flex-col items-center mb-6 w-full">

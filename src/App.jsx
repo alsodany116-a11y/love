@@ -188,7 +188,7 @@ export default function App() {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ duration: 1.2 }}
-                      className="fixed inset-0 bg-[#8B3A52] z-[9999] flex flex-col items-center justify-center p-6 text-center font-arabic"
+                      className="fixed inset-0 bg-parchment-rose z-[9999] flex flex-col items-center justify-center p-6 text-center font-arabic"
                     >
                       {/* Deep Velvet curtain vignette */}
                       <div className="absolute inset-0 bg-radial-vignette opacity-60 pointer-events-none" />
@@ -209,20 +209,20 @@ export default function App() {
                       </div>
 
                       {/* Golden postcard frame */}
-                      <div className="relative w-full max-w-[360px] bg-[#FAF6EE] border-4 border-double border-[#C9A84C] rounded-lg p-8 shadow-2xl flex flex-col items-center z-10">
-                        <Heart className="w-10 h-10 text-[#8B3A52] fill-current animate-bounce mb-4" />
+                      <div className="relative w-full max-w-[360px] bg-parchment-card border-4 border-double border-parchment-border rounded-lg p-8 shadow-2xl flex flex-col items-center z-10">
+                        <Heart className="w-10 h-10 text-parchment-rose fill-current animate-bounce mb-4" />
                         
-                        <h2 className="text-2xl font-playfair italic font-extrabold text-[#2C1810] mb-2 leading-tight">
+                        <h2 className="text-2xl font-playfair italic font-extrabold text-parchment-text mb-2 leading-tight">
                           فُتِحت الرسالة بنجاح... 💌
                         </h2>
                         
-                        <p className="text-xs text-[#2C1810]/70 font-lora leading-relaxed mb-6">
+                        <p className="text-xs text-parchment-text/70 font-lora leading-relaxed mb-6">
                           لقد فُك ختم الشمع وحان وقت سماع الكلمات وقراءة قصة حبنا السعيدة.. هل أنتِ مستعدة؟
                         </p>
 
                         <button
                           onClick={handleEnterLetter}
-                          className="px-6 py-3 bg-[#8B3A52] hover:bg-[#732C3F] text-white active:scale-95 transition-all shadow-md rounded-full font-semibold text-xs tracking-wider flex items-center gap-2 cursor-pointer group"
+                          className="px-6 py-3 bg-parchment-rose hover:opacity-90 text-white active:scale-95 transition-all shadow-md rounded-full font-semibold text-xs tracking-wider flex items-center gap-2 cursor-pointer group"
                         >
                           <Play className="w-3.5 h-3.5 fill-current" />
                           <span>ادخلي إلى قلبي 💖</span>
