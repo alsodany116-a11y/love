@@ -9,7 +9,18 @@ export default function TimelineScreen({ memories, meetings, nextButtonText, fir
   // Robust meetings parsing guard to handle both arrays and JSON-strings from database
   let activeMeetings = []
   if (Array.isArray(meetings)) {
-    activeMeetings = meetings
+    // Self-heal if meetings is a corrupted array of characters
+    if (meetings.length > 0 && meetings.every(item => typeof item === 'string' && item.length === 1)) {
+      try {
+        const reconstructed = meetings.join('')
+        const parsed = JSON.parse(reconstructed)
+        activeMeetings = Array.isArray(parsed) ? parsed : []
+      } catch (e) {
+        console.error("Failed to self-heal corrupted meetings array:", e)
+      }
+    } else {
+      activeMeetings = meetings
+    }
   } else if (typeof meetings === 'string') {
     try {
       activeMeetings = JSON.parse(meetings)

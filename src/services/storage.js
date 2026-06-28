@@ -93,6 +93,37 @@ const setLocalBackup = (key, val) => {
   }
 }
 
+const parseJSONField = (field, defaultVal) => {
+  if (!field) return defaultVal
+
+  // Check if it's an array of single-character strings (corrupted spread of a stringified JSON)
+  if (Array.isArray(field) && field.length > 0 && field.every(item => typeof item === 'string' && item.length === 1)) {
+    try {
+      const reconstructed = field.join('')
+      const parsed = JSON.parse(reconstructed)
+      return Array.isArray(parsed) ? parsed : defaultVal
+    } catch (e) {
+      console.error("Failed to self-heal corrupted JSON array field:", e)
+    }
+  }
+
+  if (Array.isArray(field)) {
+    return field
+  }
+
+  if (typeof field === 'string') {
+    try {
+      const parsed = JSON.parse(field)
+      return Array.isArray(parsed) ? parsed : defaultVal
+    } catch (e) {
+      console.error("Failed to parse JSON field:", e)
+      return defaultVal
+    }
+  }
+
+  return defaultVal
+}
+
 export const storage = {
   // --- 1. SETTINGS SERVICES ---
   getSettings: async () => {
@@ -106,6 +137,8 @@ export const storage = {
       if (error || !data) {
         console.warn("Supabase load failed, using local storage/defaults:", error)
         const local = getLocalBackup('settings', DEFAULTS.settings)
+        local.playlist = parseJSONField(local.playlist, DEFAULTS.settings.playlist)
+        local.meetings = parseJSONField(local.meetings, [])
         storage.applyColorsToDOM(local.colors, local.themePreset)
         storage.applyFontsToDOM(local.selectedArabicFont, local.selectedEnglishFont)
         return local
@@ -128,8 +161,8 @@ export const storage = {
         galleryTitle: data.gallery_title || "معرض الصور والذكريات",
         selectedArabicFont: data.selected_arabic_font || "Noto Naskh Arabic",
         selectedEnglishFont: data.selected_english_font || "Lora",
-        playlist: data.playlist || DEFAULTS.settings.playlist,
-        meetings: data.meetings || [],
+        playlist: parseJSONField(data.playlist, DEFAULTS.settings.playlist),
+        meetings: parseJSONField(data.meetings, []),
         voiceUrl: data.voice_url || null,
         firstEncounterDate: data.first_encounter_date || "2024-02-14T19:00:00+03:00",
         envelopeStyle: data.envelope_style || "vintage",
@@ -156,6 +189,8 @@ export const storage = {
     } catch (e) {
       console.error(e)
       const local = getLocalBackup('settings', DEFAULTS.settings)
+      local.playlist = parseJSONField(local.playlist, DEFAULTS.settings.playlist)
+      local.meetings = parseJSONField(local.meetings, [])
       storage.applyColorsToDOM(local.colors, local.themePreset)
       storage.applyFontsToDOM(local.selectedArabicFont, local.selectedEnglishFont)
       return local

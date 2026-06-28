@@ -41,6 +41,36 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
   const [isMeetingModalOpen, setIsMeetingModalOpen] = useState(false)
   const [meetingForm, setMeetingForm] = useState({ index: -1, date: '', title: '', location: '', note: '' })
 
+  const getMeetingsArray = () => {
+    if (!settings || !settings.meetings) return []
+    if (Array.isArray(settings.meetings)) return settings.meetings
+    if (typeof settings.meetings === 'string') {
+      try {
+        const parsed = JSON.parse(settings.meetings)
+        return Array.isArray(parsed) ? parsed : []
+      } catch (e) {
+        console.error("Failed to parse meetings:", e)
+        return []
+      }
+    }
+    return []
+  }
+
+  const getPlaylistArray = () => {
+    if (!settings || !settings.playlist) return []
+    if (Array.isArray(settings.playlist)) return settings.playlist
+    if (typeof settings.playlist === 'string') {
+      try {
+        const parsed = JSON.parse(settings.playlist)
+        return Array.isArray(parsed) ? parsed : []
+      } catch (e) {
+        console.error("Failed to parse playlist:", e)
+        return []
+      }
+    }
+    return []
+  }
+
   // List of 10 Arabic and 10 English Google Fonts
   const arabicFonts = [
     'Noto Naskh Arabic',
@@ -331,7 +361,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
 
   const handleSavePlaylistItem = (e) => {
     e.preventDefault()
-    const currentPlaylist = [...(settings.playlist || [])]
+    const currentPlaylist = [...getPlaylistArray()]
     const newItem = { name: playlistForm.name, url: playlistForm.url }
 
     if (playlistForm.index !== -1) {
@@ -348,7 +378,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
 
   const handleDeletePlaylistItem = (index) => {
     if (!window.confirm('هل أنت متأكد من حذف هذه الأغنية؟')) return
-    const currentPlaylist = [...(settings.playlist || [])]
+    const currentPlaylist = [...getPlaylistArray()]
     currentPlaylist.splice(index, 1)
 
     const updated = { ...settings, playlist: currentPlaylist }
@@ -357,7 +387,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
   }
 
   const movePlaylistItem = (index, direction) => {
-    const currentPlaylist = [...(settings.playlist || [])]
+    const currentPlaylist = [...getPlaylistArray()]
     const targetIndex = index + direction
     if (targetIndex < 0 || targetIndex >= currentPlaylist.length) return
 
@@ -389,7 +419,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
 
   const handleSaveMeetingItem = (e) => {
     e.preventDefault()
-    const currentMeetings = [...(settings.meetings || [])]
+    const currentMeetings = [...getMeetingsArray()]
     const newItem = {
       date: meetingForm.date,
       title: meetingForm.title,
@@ -411,7 +441,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
 
   const handleDeleteMeetingItem = (index) => {
     if (!window.confirm('هل أنت متأكد من حذف هذا اللقاء؟')) return
-    const currentMeetings = [...(settings.meetings || [])]
+    const currentMeetings = [...getMeetingsArray()]
     currentMeetings.splice(index, 1)
 
     const updated = { ...settings, meetings: currentMeetings }
@@ -528,7 +558,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
       <div className="w-full max-w-[820px] bg-parchment-card border border-parchment-border rounded-lg shadow-vintage overflow-hidden flex flex-col md:flex-row">
         
         {/* Sidebar Nav */}
-        <div className="w-full md:w-56 bg-[#EDE4CA] border-b md:border-b-0 md:border-l border-parchment-border/50 p-4 space-y-1.5 flex-shrink-0 flex md:flex-col overflow-x-auto md:overflow-x-visible no-scrollbar">
+        <div className="w-full md:w-56 bg-[#EDE4CA] border-b md:border-b-0 md:border-l border-parchment-border/50 p-3.5 space-y-1.5 md:space-y-1.5 flex-shrink-0 flex md:flex-col overflow-x-auto md:overflow-x-visible no-scrollbar gap-2 md:gap-0">
           
           <div className="hidden md:flex flex-col items-center text-center pb-6 border-b border-parchment-border/20 mb-4">
             <span className="text-2xl font-bold">💎</span>
@@ -553,10 +583,10 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2.5 px-4 py-2.5 rounded text-sm transition-all text-right w-full flex-shrink-0 font-medium ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-full md:rounded text-xs md:text-sm transition-all text-right md:w-full w-auto flex-shrink-0 font-medium ${
                   isActive
                     ? 'bg-parchment-gold text-white shadow-sm'
-                    : 'text-parchment-text/75 hover:bg-[#E4D9BB]'
+                    : 'text-parchment-text/75 hover:bg-[#E4D9BB] bg-[#E4D9BB]/30'
                 }`}
               >
                 <Icon className="w-4 h-4 flex-shrink-0" />
@@ -565,13 +595,13 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
             )
           })}
 
-          <div className="md:mt-auto pt-4 md:border-t border-parchment-border/20 flex flex-col gap-2 w-full md:flex-none">
+          <div className="md:mt-auto pt-0 md:pt-4 md:border-t border-parchment-border/20 flex md:flex-col gap-2 w-auto md:w-full md:flex-none flex-shrink-0">
             <button
               onClick={onBackToSite}
-              className="flex items-center justify-center gap-1.5 px-3 py-2 bg-parchment-text/5 hover:bg-parchment-text/10 text-parchment-text rounded text-xs transition-all w-full cursor-pointer"
+              className="flex items-center justify-center gap-1.5 px-3.5 py-2 bg-parchment-rose text-white hover:opacity-90 rounded-full md:rounded text-xs transition-all w-auto md:w-full cursor-pointer whitespace-nowrap"
             >
               <Eye className="w-3.5 h-3.5" />
-              <span className="whitespace-nowrap">معاينة الموقع</span>
+              <span>معاينة الموقع</span>
             </button>
           </div>
 
@@ -888,7 +918,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
           {activeTab === 'meetings' && (
             <div className="space-y-6">
               <div className="flex justify-between items-center">
-                <span className="text-xs text-parchment-text/60 font-semibold">عدد المقابلات: {(settings.meetings || []).length}</span>
+                <span className="text-xs text-parchment-text/60 font-semibold">عدد المقابلات: {getMeetingsArray().length}</span>
                 <button
                   onClick={openMeetingAdd}
                   className="px-3 py-1.5 bg-parchment-gold hover:bg-[#967B0A] text-white rounded text-xs flex items-center gap-1 transition-all cursor-pointer font-bold"
@@ -900,7 +930,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
 
               {/* Meetings list */}
               <div className="space-y-3 max-h-[350px] overflow-y-auto pr-1 no-scrollbar">
-                {(settings.meetings || []).map((item, idx) => (
+                {getMeetingsArray().map((item, idx) => (
                   <div key={idx} className="p-4 bg-[#F2EBCE]/50 border border-parchment-border/30 rounded flex items-center justify-between gap-4">
                     <div className="min-w-0 flex-grow">
                       <div className="flex items-center gap-2">
@@ -931,7 +961,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
                   </div>
                 ))}
 
-                {(settings.meetings || []).length === 0 && (
+                {getMeetingsArray().length === 0 && (
                   <p className="text-center text-xs text-parchment-text/45 py-8">الجدول فارغ. سجل بعض اللقاءات!</p>
                 )}
               </div>
@@ -1022,7 +1052,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
             <div className="space-y-6">
               <div className="flex justify-between items-center">
                 <span className="text-xs text-parchment-text/60">
-                  الأغاني في القائمة: {(settings.playlist || []).length}
+                  الأغاني في القائمة: {getPlaylistArray().length}
                 </span>
                 <button
                   onClick={openPlaylistAdd}
@@ -1034,7 +1064,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
               </div>
 
               <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1 no-scrollbar">
-                {(settings.playlist || []).map((track, tIdx) => (
+                {getPlaylistArray().map((track, tIdx) => (
                   <div key={tIdx} className="p-3.5 bg-[#F2EBCE]/50 border border-parchment-border/30 rounded flex items-center justify-between gap-4">
                     <div className="min-w-0 flex-grow text-right">
                       <div className="flex items-center gap-2">
@@ -1050,7 +1080,7 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
                       <button onClick={() => movePlaylistItem(tIdx, -1)} disabled={tIdx === 0} className="p-1 hover:bg-parchment-text/5 rounded text-parchment-text/60 disabled:opacity-30">
                         <ArrowUp className="w-3.5 h-3.5" />
                       </button>
-                      <button onClick={() => movePlaylistItem(tIdx, 1)} disabled={tIdx === (settings.playlist || []).length - 1} className="p-1 hover:bg-parchment-text/5 rounded text-parchment-text/60 disabled:opacity-30">
+                      <button onClick={() => movePlaylistItem(tIdx, 1)} disabled={tIdx === getPlaylistArray().length - 1} className="p-1 hover:bg-parchment-text/5 rounded text-parchment-text/60 disabled:opacity-30">
                         <ArrowDown className="w-3.5 h-3.5" />
                       </button>
                       <div className="w-[1px] h-4 bg-parchment-border/20 mx-1"></div>
