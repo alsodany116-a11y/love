@@ -182,3 +182,6 @@ WHERE NOT EXISTS (SELECT 1 FROM public.romantic_gallery);
 ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS theme_preset text NOT NULL DEFAULT 'classic';
 ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS envelope_inside_text text NOT NULL DEFAULT 'إلى أغلى ما أملك...';
 ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS bg_hearts_opacity double precision NOT NULL DEFAULT 0.15;
+ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS curtain_title text NOT NULL DEFAULT 'فُتِحت الرسالة بنجاح... 💌';
+ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS curtain_description text NOT NULL DEFAULT 'لقد فُك ختم الشمع وحان وقت سماع الكلمات وقراءة قصة حبنا السعيدة.. هل أنتِ مستعدة؟';
+ALTER TABLE public.romantic_settings ADD COLUMN IF NOT EXISTS curtain_button_text text NOT NULL DEFAULT 'ادخلي إلى قلبي 💖';

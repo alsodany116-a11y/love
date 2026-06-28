@@ -234,11 +234,11 @@ export default function App() {
                         <Heart className="w-10 h-10 text-parchment-rose fill-current animate-bounce mb-4" />
                         
                         <h2 className="text-2xl font-playfair italic font-extrabold text-parchment-text mb-2 leading-tight">
-                          فُتِحت الرسالة بنجاح... 💌
+                          {settings.curtainTitle || "فُتِحت الرسالة بنجاح... 💌"}
                         </h2>
                         
                         <p className="text-xs text-parchment-text/70 font-lora leading-relaxed mb-6">
-                          لقد فُك ختم الشمع وحان وقت سماع الكلمات وقراءة قصة حبنا السعيدة.. هل أنتِ مستعدة؟
+                          {settings.curtainDescription || "لقد فُك ختم الشمع وحان وقت سماع الكلمات وقراءة قصة حبنا السعيدة.. هل أنتِ مستعدة؟"}
                         </p>
 
                         <button
@@ -246,7 +246,7 @@ export default function App() {
                           className="px-6 py-3 bg-parchment-rose hover:opacity-90 text-white active:scale-95 transition-all shadow-md rounded-full font-semibold text-xs tracking-wider flex items-center gap-2 cursor-pointer group"
                         >
                           <Play className="w-3.5 h-3.5 fill-current" />
-                          <span>ادخلي إلى قلبي 💖</span>
+                          <span>{settings.curtainButtonText || "ادخلي إلى قلبي 💖"}</span>
                         </button>
                       </div>
                     </motion.div>

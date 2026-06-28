@@ -742,6 +742,35 @@ export default function AdminDashboard({ onBackToSite, onSettingsChanged }) {
                 />
               </div>
 
+              <div>
+                <label className="block text-xs font-bold mb-2">عنوان كارت الترحيب (بعد فتح الظرف) ✦</label>
+                <input
+                  type="text"
+                  value={settings.curtainTitle || ''}
+                  onChange={(e) => setSettings({ ...settings, curtainTitle: e.target.value })}
+                  className="admin-input"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold mb-2">نص كارت الترحيب (بعد فتح الظرف) ✦</label>
+                <textarea
+                  value={settings.curtainDescription || ''}
+                  onChange={(e) => setSettings({ ...settings, curtainDescription: e.target.value })}
+                  className="admin-input h-20 resize-none py-2"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold mb-2">نص زر الدخول للرسالة ✦</label>
+                <input
+                  type="text"
+                  value={settings.curtainButtonText || ''}
+                  onChange={(e) => setSettings({ ...settings, curtainButtonText: e.target.value })}
+                  className="admin-input"
+                />
+              </div>
+
               <div className="pt-6">
                 <button
                   onClick={() => saveAllSettings()}

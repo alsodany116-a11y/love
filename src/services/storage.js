@@ -36,6 +36,9 @@ const DEFAULTS = {
     musicStyle: "vinyl",
     envelopeInsideText: "إلى أغلى ما أملك...",
     bgHeartsOpacity: 0.15,
+    curtainTitle: "فُتِحت الرسالة بنجاح... 💌",
+    curtainDescription: "لقد فُك ختم الشمع وحان وقت سماع الكلمات وقراءة قصة حبنا السعيدة.. هل أنتِ مستعدة؟",
+    curtainButtonText: "ادخلي إلى قلبي 💖",
     colors: {
       bg: "#F5EDD6",
       gold: "#B8960C",
@@ -172,6 +175,9 @@ export const storage = {
         themePreset: data.theme_preset || "classic",
         envelopeInsideText: data.envelope_inside_text || "إلى أغلى ما أملك...",
         bgHeartsOpacity: data.bg_hearts_opacity !== undefined ? data.bg_hearts_opacity : 0.15,
+        curtainTitle: data.curtain_title || "فُتِحت الرسالة بنجاح... 💌",
+        curtainDescription: data.curtain_description || "لقد فُك ختم الشمع وحان وقت سماع الكلمات وقراءة قصة حبنا السعيدة.. هل أنتِ مستعدة؟",
+        curtainButtonText: data.curtain_button_text || "ادخلي إلى قلبي 💖",
         colors: {
           bg: data.bg_color,
           gold: data.gold_color,
@@ -237,7 +243,10 @@ export const storage = {
           music_style: settings.musicStyle || 'vinyl',
           theme_preset: settings.themePreset || 'classic',
           envelope_inside_text: settings.envelopeInsideText || 'إلى أغلى ما أملك...',
-          bg_hearts_opacity: settings.bgHeartsOpacity !== undefined ? settings.bgHeartsOpacity : 0.15
+          bg_hearts_opacity: settings.bgHeartsOpacity !== undefined ? settings.bgHeartsOpacity : 0.15,
+          curtain_title: settings.curtainTitle || "فُتِحت الرسالة بنجاح... 💌",
+          curtain_description: settings.curtainDescription || "لقد فُك ختم الشمع وحان وقت سماع الكلمات وقراءة قصة حبنا السعيدة.. هل أنتِ مستعدة؟",
+          curtain_button_text: settings.curtainButtonText || "ادخلي إلى قلبي 💖"
         })
 
       if (error) throw error
